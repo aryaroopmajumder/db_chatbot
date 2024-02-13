@@ -5,7 +5,7 @@ __author__ = "Aryaroop Majumder"
 import os
 import logging
 from dotenv import load_dotenv
-from langchain_community.llms import Ollama
+import ollama
 
 load_dotenv()
 
@@ -19,8 +19,11 @@ class LlamaModel:
         model = os.getenv("OLLAMA_MODEL")
         try:
             logger.debug("Loading Llama")
-            llm = Ollama(model=model)
-            llm.invoke("Tell me a joke")
+            stream = ollama.chat(
+                model=model,
+                messages=[{'role': 'user', 'content': 'Why is the sky blue?'}],
+                stream=False,
+            )
 
         except Exception as ex:
             logger.error(f"Error in LLamaModel: {ex.args}")
