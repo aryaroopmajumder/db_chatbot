@@ -9,28 +9,29 @@ fi
 # Set non-interactive frontend to avoid prompts from apt-get
 export DEBIAN_FRONTEND=noninteractive
 
-# Update system and install curl
-apt-get update && apt-get install -y curl
+# Update system and install necessary packages
+apt-get update && apt-get install -y curl python3-pip
 
-# Check if ollama is installed
-if command -v ollama >/dev/null 2>&1; then
-    echo "ollama is already installed, starting service and pulling llama2."
-    ollama pull llama2
-else
+# Attempt to install ollama if it's not already installed
+if ! command -v ollama >/dev/null 2>&1; then
     echo "ollama is not installed. Installing now."
     curl -fsSL https://ollama.com/install.sh | sh
-    ollama serve
-
-    # Verify ollama was installed successfully before proceeding
-    if command -v ollama >/dev/null 2>&1; then
-        echo "ollama installed successfully."
-        ollama serve
-        ollama pull llama2
-    else
-        echo "Installation failed. ollama could not be installed."
-        exit 1
-    fi
 fi
 
-apt install python3-pip
-pip install -r ./backend/requirements.txt
+# Check if ollama is installed after the installation attempt
+if command -v ollama >/dev/null 2>&1; then
+    echo "Starting ollama service and pulling llama2."
+    ollama serve
+    ollama pull llama2
+else
+    echo "Installation failed. ollama could not be installed."
+    exit 1
+fi
+
+# Install Python packages
+if [ -f "./backend/requirements.txt" ]; then
+    pip install -r ./backend/requirements.txt
+else
+    echo "requirements.txt file does not exist in the specified path."
+    exit 1
+fi
