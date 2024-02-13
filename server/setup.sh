@@ -31,3 +31,6 @@ else
         exit 1
     fi
 fi
+
+apt install python3-pip
+pip install -r ./backend/requirements.txt
