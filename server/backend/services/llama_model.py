@@ -22,8 +22,10 @@ class LlamaModel:
             stream = ollama.chat(
                 model=model,
                 messages=[{'role': 'user', 'content': 'Why is the sky blue?'}],
-                stream=False,
+                stream=True,
             )
+            for chunk in stream:
+                print(chunk['message']['content'], end='', flush=True)
 
         except Exception as ex:
             logger.error(f"Error in LLamaModel: {ex.args}")
