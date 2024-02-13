@@ -19,10 +19,11 @@ class LlamaModel:
         model = os.getenv("OLLAMA_MODEL")
         try:
             logger.debug("Entering LlamaModel")
-            logger.debug(f"Model selected is : {os.getenv('OLLAMA_MODEL')}")
-            ollama.chat()
+            model_name = os.getenv("OLLAMA_MODEL")
+            logger.debug(f"Model selected is : {model_name}")
+            ollama.chat(model=model_name)
         except ollama.ResponseError as e:
             # print('Error:', e.error)
             if e.status_code == 404:
-                logger.error("Error as there is no model within")
+                logger.error("Error as there is no model wait for the model to initialise")
                 ollama.pull(model)
