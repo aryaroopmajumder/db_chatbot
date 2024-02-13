@@ -31,7 +31,7 @@ fi
 
 # Install Python packages
 if [ -f "./requirements.txt" ]; then
-    pip install -r ./backend/requirements.txt
+    pip install -r ./requirements.txt
 else
     echo "requirements.txt file does not exist in the specified path."
     exit 1
