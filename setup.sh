@@ -17,4 +17,4 @@ apt-get update && apt-get install -y \
 # Download and execute the install script
 curl -fsSL https://ollama.com/install.sh | sh
 
-ollama run llama2
+ollama pull llama2
