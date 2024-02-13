@@ -5,7 +5,7 @@ __author__ = "Aryaroop Majumder"
 import os
 import logging
 from dotenv import load_dotenv
-import ollama
+from langchain_community.llms import Ollama
 
 load_dotenv()
 
@@ -18,10 +18,10 @@ class LlamaModel:
     def __init__(self):
         model = os.getenv("OLLAMA_MODEL")
         try:
-            logger.debug("Entering LlamaModel")
-            model_name = os.getenv("OLLAMA_MODEL")
-            logger.debug(f"Model selected is : {model_name}")
-            ollama.pull('model_name')
-        except ollama.ResponseError as e:
-            # print('Error:', e.error)
-            logger.error(f"Model is not found: {e}")
+            logger.debug("Loading Llama")
+            llm = Ollama(model=model)
+            llm.invoke("Tell me a joke")
+
+        except Exception as ex:
+            logger.error(f"Error in LLamaModel: {ex.args}")
+
