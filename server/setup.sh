@@ -16,12 +16,13 @@ apt-get update && apt-get install -y curl python3-pip
 if ! command -v ollama >/dev/null 2>&1; then
     echo "ollama is not installed. Installing now."
     curl -fsSL https://ollama.com/install.sh | sh
+    ollama serve
 fi
 
 # Check if ollama is installed after the installation attempt
 if command -v ollama >/dev/null 2>&1; then
     echo "Starting ollama service and pulling llama2."
-    ollama serve
+
     ollama pull llama2
 else
     echo "Installation failed. ollama could not be installed."
@@ -29,7 +30,7 @@ else
 fi
 
 # Install Python packages
-if [ -f "./backend/requirements.txt" ]; then
+if [ -f "./requirements.txt" ]; then
     pip install -r ./backend/requirements.txt
 else
     echo "requirements.txt file does not exist in the specified path."
