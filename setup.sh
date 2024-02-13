@@ -12,9 +12,6 @@ export DEBIAN_FRONTEND=noninteractive
 # Update system and install curl
 apt-get update && apt-get install -y curl
 
-# Clean up the apt cache to free up space
-apt-get clean
-
 # Check if ollama is installed
 if command -v ollama >/dev/null 2>&1; then
     echo "ollama is already installed, starting service and pulling llama2."
