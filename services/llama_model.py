@@ -24,4 +24,4 @@ class LlamaModel:
             ollama.pull('model_name')
         except ollama.ResponseError as e:
             # print('Error:', e.error)
-            logger.error("Model is not found")
+            logger.error(f"Model is not found: {e}")
