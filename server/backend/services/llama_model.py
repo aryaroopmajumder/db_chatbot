@@ -19,9 +19,10 @@ class LlamaModel:
         model = os.getenv("OLLAMA_MODEL")
         try:
             logger.debug("Loading Llama")
+            question = input("Enter question: ")
             stream = ollama.chat(
                 model=model,
-                messages=[{'role': 'user', 'content': 'Why is the sky blue?'}],
+                messages=[{'role': 'user', 'content': question}],
                 stream=True,
             )
             for chunk in stream:
